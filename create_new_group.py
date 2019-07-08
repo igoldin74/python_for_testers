@@ -10,7 +10,6 @@ class NewGroupCreation(unittest.TestCase):
 
     def test_group_creation(self):
         wd = self.wd
-        self.open_home_page(wd)
         self.login(wd, username="admin", password="secret")
         self.open_group_page(wd)
         self.create_group(wd, Group(name="test_group_0", header="dfdsfsdfg", footer="sdgdsfdsf"))
@@ -36,14 +35,12 @@ class NewGroupCreation(unittest.TestCase):
         wd.find_element_by_link_text("groups").click()
 
     def login(self, wd, username, password):
+        wd.get("http://192.168.1.13:8080/addressbook/index.php")
         wd.find_element_by_name("user").clear()
         wd.find_element_by_name("user").send_keys(username)
         wd.find_element_by_name("pass").clear()
         wd.find_element_by_name("pass").send_keys(password)
         wd.find_element_by_xpath("//input[@value='Login']").click()
-
-    def open_home_page(self, wd):
-        wd.get("http://192.168.1.13:8080/addressbook/index.php")
 
     def tearDown(self):
         self.wd.quit()
