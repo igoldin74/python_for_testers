@@ -102,3 +102,9 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+.idea/workspace.xml
+.DS_Store
+.idea/misc.xml
+.idea/modules.xml
+.idea/python_for_testers.iml
+.idea/vcs.xml
