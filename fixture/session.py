@@ -7,7 +7,6 @@ class SessionHelper:
 
     def login(self, username="admin", password="secret"):
         wd = self.app.wd
-        self.app.open_home_page()
         wd.get("http://192.168.1.22:8080/addressbook/index.php")
         wd.find_element_by_name("user").clear()
         wd.find_element_by_name("user").send_keys(username)
