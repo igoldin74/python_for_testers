@@ -11,3 +11,15 @@ def test_first_contact_modification(app):
                               email="test1@mailinator.com_new"))
     app.open_home_page()
     app.session.logout()
+
+
+def test_random_contact_modification(app):
+    app.session.login()
+    app.contact.modify_random_contact(Contact(firstname="random",
+                              middlename="random",
+                              lastname="random",
+                              homephone="random",
+                              mobilephone="random",
+                              email="test1@random.com_new"))
+    app.session.logout()
+
