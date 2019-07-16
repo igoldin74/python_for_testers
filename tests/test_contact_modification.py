@@ -15,7 +15,7 @@ def test_first_contact_modification(app):
 
 def test_random_contact_modification(app):
     app.session.login()
-    app.contact.modify_random_contact(Contact(firstname="random",
+    app.contact.modify_random(Contact(firstname="random",
                               middlename="random",
                               lastname="random",
                               homephone="random",

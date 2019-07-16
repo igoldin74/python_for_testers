@@ -56,7 +56,7 @@ class ContactHelper:
         wd.find_element_by_name("email").send_keys(contact.email)
         wd.find_element_by_xpath("(//input[@name='update'])[2]").click()
 
-    def modify_random_contact(self, contact):
+    def modify_random(self, contact):
         xpath_locator = self.get_contact_id()
         wd = self.app.wd
         wd.find_element_by_xpath(xpath_locator).click()
@@ -82,14 +82,13 @@ class ContactHelper:
     def get_contact_id(self):
         wd = self.app.wd
         elements = wd.find_elements_by_xpath("//a[contains(@href, 'edit.php?id')]")
-        for ee in elements:
-            links = ee.get_attribute('href')
-            print(links)
-            contact_ids = links[49:51]
-            print(contact_ids)
-            xpath_locator = "//a[@href='edit.php?id=" + random.choice(contact_ids) + "']"
-            return xpath_locator
-
-
-
+        links = []
+        for i in elements:
+            link = i.get_attribute('href')
+            links.append(link)
+        url = random.choice(links)
+        contact_id = url[49:51]
+        xpath_locator = "//a[@href='edit.php?id=" + contact_id + "']"
+        print(xpath_locator)
+        return xpath_locator
 
