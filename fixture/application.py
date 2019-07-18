@@ -18,3 +18,4 @@ class Application:
 
     def destroy(self):
         self.wd.quit()
+
