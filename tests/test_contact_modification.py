@@ -8,8 +8,6 @@ def test_first_contact_modification(app):
                               homephone="234567777_new",
                               mobilephone="678765555_new",))
     app.open_home_page()
-    app.session.logout()
-
 
 def test_random_contact_modification(app):
     app.contact.modify_random(Contact(firstname="random",

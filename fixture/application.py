@@ -26,10 +26,11 @@ class Application:
             wd.find_element_by_name(field_name).clear()
             wd.find_element_by_name(field_name).send_keys(text)
 
-    def is_valid(self):
+    def is_not_valid(self):
         try:
             self.wd.current_url
-            return True
-        except:
             return False
+        except:
+            return True
+
 
