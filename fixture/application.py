@@ -7,13 +7,15 @@ from fixture.group import GroupHelper
 class Application:
     def __init__(self):
         self.wd = webdriver.Firefox()
-        self.wd.implicitly_wait(15)
+        self.wd.implicitly_wait(5)
         self.session = SessionHelper(self)
         self.contact = ContactHelper(self)
         self.group = GroupHelper(self)
 
     def open_home_page(self):
         wd = self.wd
+        if wd.current_url.endswith("/index.php") and len(wd.find_elements_by_id("MassCB")) > 0:
+            return
         wd.find_element_by_link_text("home").click()
 
     def destroy(self):
