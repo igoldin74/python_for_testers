@@ -14,12 +14,14 @@ class ContactHelper:
 
     def delete(self):
         wd = self.app.wd
+        self.app.open_home_page()
         wd.find_element_by_name("selected[]").click()
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to_alert().accept()
 
     def modify(self, contact):
         wd = self.app.wd
+        self.app.open_home_page()
         wd.find_element_by_xpath("//img[@alt='Edit']").click()
         self.fill_out_contact_form(contact)
         wd.find_element_by_xpath("(//input[@name='update'])[2]").click()
@@ -27,6 +29,7 @@ class ContactHelper:
     def modify_random(self, contact):
         xpath_locator = self.get_random_contact_id()
         wd = self.app.wd
+        self.app.open_home_page()
         wd.find_element_by_xpath(xpath_locator).click()
         self.fill_out_contact_form(contact)
         wd.find_element_by_xpath("(//input[@name='update'])[2]").click()
@@ -52,3 +55,7 @@ class ContactHelper:
         self.app.type("mobile", contact.mobilephone)
         self.app.type("email", contact.email)
 
+    def count(self):
+        wd = self.app.wd
+        self.app.open_home_page()
+        return len(wd.find_elements_by_name("selected[]"))
