@@ -2,6 +2,8 @@ from selenium import webdriver
 from fixture.session import SessionHelper
 from fixture.contact import ContactHelper
 from fixture.group import GroupHelper
+from model.group import Group
+from model.contact import Contact
 
 
 class Application:
@@ -34,5 +36,29 @@ class Application:
             return False
         except:
             return True
+
+    def get_group_list(self):
+        wd = self.wd
+        self.group.open_group_page()
+        groups = []
+        for element in wd.find_elements_by_css_selector('span.group'):
+            text = element.text
+            group_id = element.find_element_by_name('selected[]').get_attribute('value')
+            groups.append(Group(name=text, id=group_id))
+        return groups
+
+    def get_contact_list(self):
+        wd = self.wd
+        self.open_home_page()
+        contacts = []
+        for element in wd.find_elements_by_name("entry"):
+            text = element.find_element_by_css_selector('[name] td:nth-of-type(2)').text
+            contact_id = element.find_element_by_name("selected[]").get_attribute("value")
+            contacts.append(Contact(lastname=text, id=contact_id))
+        return contacts
+
+    def wait(self, s):
+        wd = self.wd
+        wd.implicitly_wait(s)
 
 
