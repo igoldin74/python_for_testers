@@ -12,29 +12,27 @@ def test_first_contact_modification(app):
     old_contact_list = app.get_contact_list()
     contact.id = old_contact_list[0].id
     app.contact.modify(contact)
+    assert app.contact.count() == len(old_contact_list)
     new_contact_list = app.get_contact_list()
-    assert len(new_contact_list) == len(old_contact_list)
-    app.open_home_page()
     old_contact_list[0] = contact
     assert sorted(old_contact_list, key=Contact.id_or_max) == sorted(new_contact_list, key=Contact.id_or_max)
 
 
-def test_random_contact_modification(app):
-    contact = Contact(firstname="random",
-                              middlename="random",
-                              lastname="random",
-                              homephone="random",
-                              mobilephone="random",
-                              email="test1@random.com_new")
-    if app.contact.count() == 0:
-        app.contact.create(contact)
-
-    old_contact_list = app.get_contact_list()
-    contact.id = old_contact_list[0].id
-    app.contact.modify_random(contact)
-    new_contact_list = app.get_contact_list()
-    assert len(new_contact_list) == len(old_contact_list)
-    old_contact_list[0] = contact
-    assert sorted(new_contact_list, key=Contact.id_or_max) == sorted(old_contact_list, key=Contact.id_or_max)
+# def test_random_contact_modification(app):
+#     contact = Contact(firstname="random",
+#                       lastname="random",
+#                       homephone="random",
+#                       mobilephone="random",
+#                       email="test1@random.com_new")
+#     if app.contact.count() == 0:
+#         app.contact.create(contact)
+#
+#     old_contact_list = app.get_contact_list()
+#     contact.id = old_contact_list[0].id
+#     app.contact.modify_random(contact)
+#     new_contact_list = app.get_contact_list()
+#     assert len(new_contact_list) == len(old_contact_list)
+#     old_contact_list[0] = contact
+#     assert sorted(new_contact_list, key=Contact.id_or_max) == sorted(old_contact_list, key=Contact.id_or_max)
 
 

@@ -37,16 +37,6 @@ class Application:
         except:
             return True
 
-    def get_group_list(self):
-        wd = self.wd
-        self.group.open_group_page()
-        groups = []
-        for element in wd.find_elements_by_css_selector('span.group'):
-            text = element.text
-            group_id = element.find_element_by_name('selected[]').get_attribute('value')
-            groups.append(Group(name=text, id=group_id))
-        return groups
-
     def get_contact_list(self):
         wd = self.wd
         self.open_home_page()
