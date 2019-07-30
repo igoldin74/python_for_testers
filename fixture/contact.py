@@ -15,44 +15,33 @@ class ContactHelper:
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
         self.contact_cache = None
 
-    def delete(self):
+    def delete_first_contact(self):
+        self.delete_contact_by_index(0)
+
+    def delete_contact_by_index(self, index):
         wd = self.app.wd
         self.app.open_home_page()
-        wd.find_element_by_name("selected[]").click()
+        self.select_contact_by_index(index)
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to_alert().accept()
         wd.find_element_by_css_selector("div.msgbox")
         self.contact_cache = None
 
-    def modify(self, contact):
+    def modify_first_contact(self, contact):
+        self.modify_contact_by_index(contact, 0)
+
+    def modify_contact_by_index(self, contact, index):
         wd = self.app.wd
         self.app.open_home_page()
-        wd.find_element_by_xpath("//img[@alt='Edit']").click()
+        wd.find_elements_by_xpath("//img[@alt='Edit']")[index].click()
         self.fill_out_contact_form(contact)
         wd.find_element_by_xpath("(//input[@name='update'])[2]").click()
         self.contact_cache = None
 
-    def modify_random(self, contact):
-        xpath_locator = self.get_random_contact_id()
+    def select_contact_by_index(self, index):
         wd = self.app.wd
         self.app.open_home_page()
-        wd.find_element_by_xpath(xpath_locator).click()
-        self.fill_out_contact_form(contact)
-        wd.find_element_by_xpath("(//input[@name='update'])[2]").click()
-        self.contact_cache = None
-
-    def get_random_contact_id(self):
-        wd = self.app.wd
-        elements = wd.find_elements_by_xpath("//a[contains(@href, 'edit.php?id')]")
-        links = []
-        for i in elements:
-            link = i.get_attribute('href')
-            links.append(link)
-        url = random.choice(links)
-        contact_id = url[49:51]
-        xpath_locator = "//a[@href='edit.php?id=" + contact_id + "']"
-        print(xpath_locator)
-        return xpath_locator
+        wd.find_elements_by_name("selected[]")[index].click()
 
     def fill_out_contact_form(self, contact):
         self.app.type("firstname", contact.firstname)
