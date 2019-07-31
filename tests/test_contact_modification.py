@@ -7,7 +7,7 @@ def test_random_contact_modification(app):
                               middlename="test_middle_name1_modified",
                               lastname="test_last_name1_modified",
                               homephone="234567777_new",
-                              mobilephone="678765555_new")
+                              email="test@tester.com")
     if app.contact.count() == 0:
         app.contact.create(contact)
     old_contact_list = app.contact.get_contact_list()
@@ -25,7 +25,7 @@ def test_first_contact_modification(app):
                               middlename="test_middle_name1_modified",
                               lastname="test_last_name1_modified",
                               homephone="234567777_new",
-                              mobilephone="678765555_new")
+                              email="tester@test.org")
     if app.contact.count() == 0:
         app.contact.create(contact)
     old_contact_list = app.contact.get_contact_list()
