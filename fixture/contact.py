@@ -65,7 +65,6 @@ class ContactHelper:
             for element in wd.find_elements_by_name("entry"):
                 text_1 = element.find_element_by_css_selector('[name] td:nth-of-type(3)').text
                 text_2 = element.find_element_by_css_selector('[name] td:nth-of-type(2)').text
-                text_3 = element.find_element_by_css_selector('[name] td:nth-of-type(5)').text
                 contact_id = element.find_element_by_name("selected[]").get_attribute("value")
-                self.contact_cache.append(Contact(firstname=text_1, lastname=text_2, email=text_3, id=contact_id))
+                self.contact_cache.append(Contact(firstname=text_1, lastname=text_2, id=contact_id))
             return list(self.contact_cache)
