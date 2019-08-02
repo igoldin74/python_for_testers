@@ -8,18 +8,32 @@ class Contact:
                  middlename=None,
                  homephone=None,
                  mobilephone=None,
-                 email=None,
+                 workphone=None,
+                 phone2=None,
+                 email1=None,
+                 email2=None,
+                 email3=None,
+                 all_emails=None,
+                 all_phones=None,
+                 address=None,
                  id=None):
         self.firstname = firstname
         self.lastname = lastname
         self.middlename = middlename
         self.homephone = homephone
         self.mobilephone = mobilephone
-        self.email = email
+        self.workphone = workphone
+        self.phone2 = phone2
+        self.email1 = email1
+        self.email2 = email2
+        self.email3 = email3
+        self.all_emails = all_emails
+        self.address = address
+        self.all_phones = all_phones
         self.id = id
 
     def __repr__(self):     # redefined standard representation method for printing out contact object in console
-        return "%s:%s:%s" % (self.id, self.firstname, self.lastname)
+        return "%s:%s:%s:%s:%s" % (self.id, self.firstname, self.lastname, self.all_emails, self.all_phones)
 
     def __eq__(self, other):    # redefined standard equals method for comparing contact objects by their attributes
                                 # (name&id)
