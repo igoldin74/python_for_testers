@@ -34,7 +34,3 @@ class Application:
             return False
         except:
             return True
-
-
-
-

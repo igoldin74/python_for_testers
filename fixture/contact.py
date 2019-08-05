@@ -48,7 +48,7 @@ class ContactHelper:
         self.app.type("lastname", contact.lastname)
         self.app.type("home", contact.homephone)
         self.app.type("mobile", contact.mobilephone)
-        self.app.type("email", contact.email)
+        self.app.type("email", contact.email1)
 
     def count(self):
         wd = self.app.wd
@@ -71,7 +71,7 @@ class ContactHelper:
                 contact_id = element.find_element_by_name("selected[]").get_attribute("value")
                 self.contact_cache.append(Contact(firstname=firstname, lastname=lastname, 
                                                   id=contact_id, address=address, all_phones=phones, all_emails=emails))
-            return list(self.contact_cache)
+        return list(self.contact_cache)
 
     def get_contact_details_from_edit_page(self, index):
         wd = self.app.wd

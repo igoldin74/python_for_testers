@@ -55,7 +55,7 @@ def clear(s):
 
 
 def concatenate_emails(contact):
-    return "\n".join([contact.email1, contact.email2, contact.email3])
+    return "\n".join(filter(lambda x: x != "" and x is not None, [contact.email1, contact.email2, contact.email3]))
 
 
 def concatenate_phones(contact):
