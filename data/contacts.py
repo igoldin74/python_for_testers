@@ -1,0 +1,20 @@
+from model.contact import Contact
+
+test_data = [Contact(firstname="name1",
+                     middlename="middlename1",
+                     lastname="lastname1",
+                     homephone="homephone1",
+                     mobilephone="mobile1",
+                     email1="email1"),
+            Contact(firstname="name2",
+                     middlename="middlename2",
+                     lastname="lastname2",
+                     homephone="homephone2",
+                     mobilephone="mobile2",
+                     email1="email2"),
+            Contact(firstname="name3",
+                     middlename="middlename3",
+                     lastname="lastname3",
+                     homephone="homephone3",
+                     mobilephone="mobile3",
+                     email1="email3")]
