@@ -1,5 +1,13 @@
 {
-  "baseUrl": "http://192.168.1.22:8080/addressbook/index.php",
-  "username": "admin",
-  "password": "secret"
+  "web": {
+    "baseUrl": "http://192.168.1.22:8080/addressbook/index.php",
+    "username": "admin",
+    "password": "secret"
+  },
+  "DB": {
+    "host": "192.168.1.22",
+    "name": "addressbook",
+    "user": "admin",
+    "password": "admin"
+  }
 }
