@@ -19,10 +19,7 @@ try:
     for group in groups:
         print(group)
     print(len(groups))
-#finally:
-    #db.destroy()
 
-#try:
     contacts = db.get_contact_list()
     for contact in contacts:
         print(contact)
