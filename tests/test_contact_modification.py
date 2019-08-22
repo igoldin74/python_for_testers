@@ -1,9 +1,11 @@
 from model.contact import Contact
 from random import randrange
+import random
 import re
 
 
 def test_random_contact_modification(app):
+    old_contact_list = app.contact.get_contact_list()
     contact = Contact(firstname="test_contact1_modified",
                               middlename="test_middle_name1_modified",
                               lastname="test_last_name1_modified",
@@ -11,7 +13,6 @@ def test_random_contact_modification(app):
                               email1="test@tester.com")
     if app.contact.count() == 0:
         app.contact.create(contact)
-    old_contact_list = app.contact.get_contact_list()
     index = randrange(len(old_contact_list))
     contact.id = old_contact_list[index].id
     app.contact.modify_contact_by_index(contact, index)
@@ -19,6 +20,27 @@ def test_random_contact_modification(app):
     new_contact_list = app.contact.get_contact_list()
     old_contact_list[index] = contact
     assert sorted(old_contact_list, key=Contact.id_or_max) == sorted(new_contact_list, key=Contact.id_or_max)
+
+
+def test_contact_modification_loaded_from_db(app, db, check_ui):
+    old_contact_list = db.get_contact_list()
+    contact_data = Contact(firstname="test_contact1_modified",
+                              middlename="test_middle_name1_modified",
+                              lastname="test_last_name1_modified",
+                              homephone="234567777_new",
+                              email1="test@tester.com")
+    contact = random.choice(old_contact_list)
+    if len(old_contact_list) == 0:
+        app.contact.create(contact)
+    app.contact.modify_contact_by_id(contact_data, contact.id)
+    assert app.contact.count() == len(old_contact_list)
+    new_contact_list = db.get_contact_list()
+    assert sorted(old_contact_list, key=Contact.id_or_max) == sorted(new_contact_list, key=Contact.id_or_max)
+    if check_ui:
+        def clean(contact):  # this func removes spaces from group names
+            return Contact(id=contact.id, firstname=contact.firstname.strip(), lastname=contact.lastname.strip())
+        db_list = map(clean, new_contact_list)
+        assert sorted(db_list, key=Contact.id_or_max) == sorted(app.contact.get_contact_list(), key=Contact.id_or_max)
 
 
 def test_first_contact_modification(app):

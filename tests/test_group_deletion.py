@@ -6,7 +6,7 @@ def test_group_removal(app, db, check_ui):
     old_group_list = db.get_group_list()
     group = random.choice(old_group_list)
     if len(db.get_group_list()) == 0:
-        app.group.create(group)
+        app.group.create(Group(name="test_group_random_name", header="random_header", footer="random_footer"))
     app.group.delete_group_by_id(group.id)
     assert app.group.count() == len(old_group_list) - 1
     new_group_list = db.get_group_list()

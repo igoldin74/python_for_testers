@@ -48,6 +48,15 @@ class GroupHelper:
         wd.find_element_by_link_text("groups").click()
         self.group_cache = None
 
+    def modify_group_by_id(self, group, group_id):
+        wd = self.app.wd
+        self.select_group_by_id(group_id)
+        wd.find_element_by_name("edit").click()
+        self.fill_out_group_form(group)
+        wd.find_element_by_name("update").click()
+        wd.find_element_by_link_text("groups").click()
+        self.group_cache = None
+
     def modify_first_group(self, group):
         self.modify_group_by_index(group, 0)
 
