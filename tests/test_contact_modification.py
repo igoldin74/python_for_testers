@@ -35,6 +35,7 @@ def test_contact_modification_loaded_from_db(app, db, check_ui):
     app.contact.modify_contact_by_id(contact_data, contact.id)
     assert app.contact.count() == len(old_contact_list)
     new_contact_list = db.get_contact_list()
+    old_contact_list = old_contact_list.remove(contact).append(contact_data)
     assert sorted(old_contact_list, key=Contact.id_or_max) == sorted(new_contact_list, key=Contact.id_or_max)
     if check_ui:
         def clean(contact):  # this func removes spaces from group names
@@ -61,6 +62,18 @@ def test_first_contact_modification(app):
 
 
 def test_contact_details_match_on_home_and_edit_pages(app):
+    details_from_home_page = app.contact.get_contact_list()[0]
+    details_from_edit_page = app.contact.get_contact_details_from_edit_page(0)
+    print(details_from_edit_page)
+    print(details_from_home_page)
+    assert details_from_home_page.firstname == details_from_edit_page.firstname
+    assert details_from_home_page.lastname == details_from_edit_page.lastname
+    assert details_from_home_page.address == details_from_edit_page.address
+    assert details_from_home_page.all_emails == concatenate_emails(details_from_edit_page)
+    assert details_from_home_page.all_phones == concatenate_phones(details_from_edit_page)
+
+
+def test_contacts_on_home_page_match_db(app, db):
     details_from_home_page = app.contact.get_contact_list()[0]
     details_from_edit_page = app.contact.get_contact_details_from_edit_page(0)
     print(details_from_edit_page)

@@ -10,7 +10,7 @@ class Group:
         self.id = id
 
     def __repr__(self):     # redefined standard representation method for printing out group object in console
-        return "%s:%s" % (self.id, self.name)
+        return "%s:%s:%s:%s" % (self.id, self.name, self.footer, self.header)
 
     def __eq__(self, other):    # redefined standard equals method for comparing group objects by their attributes
                                 # (name&id)

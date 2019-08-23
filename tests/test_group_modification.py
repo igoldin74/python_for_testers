@@ -28,6 +28,7 @@ def test_group_modification_with_db_assertion(app, db, check_ui):
     app.group.modify_group_by_id(group_data, group.id)
     assert len(old_group_list) == app.group.count()
     new_group_list = db.get_group_list()
+    old_group_list = old_group_list.remove(group).append(group_data)
     assert sorted(old_group_list, key=Group.id_or_max) == sorted(new_group_list, key=Group.id_or_max)
     if check_ui:  # this will execute when "--check_ui" run option is added
         def clean(group):  # this func removes spaces from group names
