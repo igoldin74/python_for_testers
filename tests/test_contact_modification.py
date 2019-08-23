@@ -74,16 +74,16 @@ def test_contact_details_match_on_home_and_edit_pages(app):
 
 
 def test_contacts_on_home_page_match_db(app, db):
-    details_from_home_page = app.contact.get_contact_list()[0]
-    details_from_edit_page = app.contact.get_contact_details_from_edit_page(0)
-    print(details_from_edit_page)
+    details_from_db = db.get_contact_list()
+    details_from_home_page = app.contact.get_contact_list()
     print(details_from_home_page)
-    assert details_from_home_page.firstname == details_from_edit_page.firstname
-    assert details_from_home_page.lastname == details_from_edit_page.lastname
-    assert details_from_home_page.address == details_from_edit_page.address
-    assert details_from_home_page.all_emails == concatenate_emails(details_from_edit_page)
-    assert details_from_home_page.all_phones == concatenate_phones(details_from_edit_page)
+    print(details_from_db)
+    db_list = map(clean, details_from_db)
+    assert sorted(details_from_home_page, key=Contact.id_or_max) == sorted(db_list, key=Contact.id_or_max)
 
+
+def clean(contact):
+    return Contact(id=contact.id, firstname=contact.firstname.strip(), lastname=contact.lastname.strip())
 
 def clear(s):
     return re.sub("[() -]", "", s)
