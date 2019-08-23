@@ -1,4 +1,5 @@
 from model.contact import Contact
+from selenium.webdriver.support.ui import Select
 
 
 class ContactHelper:
@@ -113,4 +114,26 @@ class ContactHelper:
         return Contact(firstname=firstname, lastname=lastname, id=contact_id, address=address, email1=email1,
                        email2=email2, email3=email3, homephone=homephone, mobilephone=mobilephone, workphone=workphone,
                        phone2=phone2)
+
+    def select_group_from_dropdown(self, group_id):
+        wd = self.app.wd
+        select = Select(wd.find_element_by_css_selector("[name='group']"))
+        select.select_by_value("%s" % group_id)
+
+    def add_contact_to_group(self, contact_id, group_id):
+        wd = self.app.wd
+        self.app.open_home_page()
+        self.select_contact_by_id(contact_id)
+        select = Select(wd.find_element_by_css_selector("[name='to_group']"))
+        select.select_by_value("%s" % group_id)
+        wd.find_element_by_css_selector("[name='add']").click()
+        self.app.open_home_page()
+
+    def remove_contact_from_group(self, contact_id, group_id):
+        wd = self.app.wd
+        self.app.open_home_page()
+        self.select_group_from_dropdown(group_id)
+        self.select_contact_by_id(contact_id)
+        wd.find_element_by_css_selector("[name='remove']").click()
+
 
