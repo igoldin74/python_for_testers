@@ -62,7 +62,6 @@ class ContactHelper:
 
     def select_contact_by_id(self, contact_id):
         wd = self.app.wd
-        self.app.open_home_page()
         wd.find_element_by_css_selector("input[id='%s']" % contact_id).click()
 
     def fill_out_contact_form(self, contact):

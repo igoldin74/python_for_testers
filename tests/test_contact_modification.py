@@ -32,11 +32,14 @@ def test_contact_modification_loaded_from_db(app, db, check_ui):
     contact = random.choice(old_contact_list)
     if len(old_contact_list) == 0:
         app.contact.create(contact)
+        old_contact_list = db.get_contact_list()
     app.contact.modify_contact_by_id(contact_data, contact.id)
     assert app.contact.count() == len(old_contact_list)
     new_contact_list = db.get_contact_list()
-    old_contact_list = old_contact_list.remove(contact).append(contact_data)
-    assert sorted(old_contact_list, key=Contact.id_or_max) == sorted(new_contact_list, key=Contact.id_or_max)
+    idx = old_contact_list.index(contact)
+    del old_contact_list[idx]
+    old_contact_list.insert(idx, contact_data)
+    assert old_contact_list == new_contact_list
     if check_ui:
         def clean(contact):  # this func removes spaces from group names
             return Contact(id=contact.id, firstname=contact.firstname.strip(), lastname=contact.lastname.strip())
