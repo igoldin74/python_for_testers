@@ -6,6 +6,7 @@ from fixture.application import Application
 import importlib
 from fixture.db import DbFixture
 
+
 fixture = None
 target = None
 
@@ -20,6 +21,7 @@ def app(request):
     fixture.session.ensure_login(username=web_config["username"], password=web_config["password"])
     return fixture
 
+
 @pytest.fixture(scope="session", autouse=True)
 def db(request):
     db_config = load_config(request.config.getoption("--target"))["DB"]
@@ -30,6 +32,7 @@ def db(request):
         dbfixture.destroy()
         request.addfinalizer(fin)
     return dbfixture
+
 
 @pytest.fixture(scope="session", autouse=True)
 def stop(request):

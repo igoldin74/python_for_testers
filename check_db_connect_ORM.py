@@ -4,11 +4,11 @@ from model.group import Group
 db = ORMFixture(host="192.168.1.22", database="addressbook", user="admin", password="admin")
 
 try:
-    l = db.get_group_list()
+    l = db.get_group_list_orm()
     for item in l:
       print(item)
     print(len(l))
-    lc = db.get_contact_list()
+    lc = db.get_contact_list_orm()
     for item in lc:
         print(item)
     print(len(lc))

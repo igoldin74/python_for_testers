@@ -2,6 +2,9 @@ from model.contact import Contact
 from random import randrange
 import random
 import re
+from fixture.orm import ORMFixture
+
+orm_db = ORMFixture(host="192.168.1.22", database="addressbook", user="admin", password="admin") # connection to DB via PonyORM initialized here
 
 
 def test_random_contact_modification(app):
@@ -76,26 +79,24 @@ def test_contact_details_match_on_home_and_edit_pages(app):
     assert details_from_home_page.all_phones == concatenate_phones(details_from_edit_page)
 
 
-def test_contacts_on_home_page_match_db(app, db):
-    details_from_db = db.get_contact_list()
+def test_contacts_on_home_page_match_db(app):
+    details_from_db = orm_db.get_contact_list_orm()
     details_from_home_page = app.contact.get_contact_list()
     db_list = map(clean, details_from_db)
     contact_from_hp = sorted(details_from_home_page, key=Contact.id_or_max)[0]
     contact_from_db = sorted(db_list, key=Contact.id_or_max)[0]
-    print(details_from_db)
-    print(db_list)
-    #assert contact_from_hp == contact_from_db
+    assert contact_from_hp == contact_from_db
     assert contact_from_hp.firstname == contact_from_db.firstname
     assert contact_from_hp.lastname == contact_from_db.lastname
     assert contact_from_hp.all_emails == concatenate_emails(contact_from_db)
     assert contact_from_hp.all_phones == concatenate_phones(contact_from_db)
 
 
-
 def clean(contact):
     return Contact(id=contact.id, firstname=contact.firstname.strip(), lastname=contact.lastname.strip(),
                    homephone=contact.homephone, mobilephone=contact.mobilephone,
                    email1=contact.email1, email2=contact.email2, email3=contact.email3)
+
 
 def clear(s):
     return re.sub("[() -]", "", s)

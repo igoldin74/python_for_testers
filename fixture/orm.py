@@ -1,8 +1,6 @@
 from pony.orm import *
-from datetime import datetime
 from model.group import Group
 from model.contact import Contact
-from pymysql.converters import decoders
 
 
 class ORMFixture:
@@ -49,11 +47,11 @@ class ORMFixture:
         return list(map(convert, contacts))
 
     @db_session
-    def get_group_list(self):
+    def get_group_list_orm(self):
         return self.convert_groups_to_model((select(g for g in ORMFixture.ORMGroup)))
 
-    @db_session(sql_debug=True)
-    def get_contact_list(self):
+    @db_session
+    def get_contact_list_orm(self):
         return self.convert_contacts_to_model((select(c for c in ORMFixture.ORMContact if c.deprecated is None)))
 
     @db_session
