@@ -33,7 +33,8 @@ class Contact:
         self.id = id
 
     def __repr__(self):     # redefined standard representation method for printing out contact object in console
-        return "%s:%s:%s:%s:%s" % (self.id, self.firstname, self.lastname, self.all_emails, self.all_phones)
+        return "%s:%s:%s:%s:%s:%s:%s" % (self.id, self.firstname, self.lastname, self.all_emails, self.all_phones,
+                                   self.homephone, self.email1)
 
     def __eq__(self, other):    # redefined standard equals method for comparing contact objects by their attributes
                                 # (name&id)
