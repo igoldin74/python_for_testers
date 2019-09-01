@@ -4,7 +4,7 @@ import random
 import re
 from fixture.orm import ORMFixture
 
-orm_db = ORMFixture(host="192.168.1.22", database="addressbook", user="admin", password="admin") # connection to DB via PonyORM initialized here
+orm_db = ORMFixture(host="localhost", database="addressbook", user="root", password="") # connection to DB via PonyORM initialized here
 
 
 def test_random_contact_modification(app):
@@ -86,10 +86,11 @@ def test_contacts_on_home_page_match_db(app):
     contact_from_hp = sorted(details_from_home_page, key=Contact.id_or_max)[0]
     contact_from_db = sorted(db_list, key=Contact.id_or_max)[0]
     assert contact_from_hp == contact_from_db
-    assert contact_from_hp.firstname == contact_from_db.firstname
-    assert contact_from_hp.lastname == contact_from_db.lastname
-    assert contact_from_hp.all_emails == concatenate_emails(contact_from_db)
-    assert contact_from_hp.all_phones == concatenate_phones(contact_from_db)
+    for contact_hp, contact_db in zip(details_from_home_page, db_list):
+        assert contact_hp.firstname == contact_db.firstname
+        assert contact_hp.lastname == contact_db.lastname
+        assert contact_hp.all_emails == concatenate_emails(contact_db)
+        assert contact_hp.all_phones == concatenate_phones(contact_db)
 
 
 def clean(contact):
