@@ -32,7 +32,7 @@ class ContactHelper:
         self.app.open_home_page()
         self.select_contact_by_id(contact_id)
         wd.find_element_by_xpath("//input[@value='Delete']").click()
-        wd.switch_to_alert().accept()
+        wd.switch_to.alert.accept()
         wd.find_element_by_css_selector("div.msgbox")
         self.contact_cache = None
 
